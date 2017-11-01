@@ -1,0 +1,51 @@
+﻿body {
+    touch-action: manipulation;
+    font-family: 'Raleway', sans-serif;
+    background-color: blanchedalmond;
+    margin: 4em;
+}
+
+.centerMe {
+    text-align: center;
+}
+
+.alignMeLeft {
+    text-align:left;
+}
+
+.alignMeRight {
+    text-align: right;
+}
+
+.petPropertiesColor {
+    color: darkcyan;
+}
+
+.floatMeLeft {
+    float:left;
+}
+
+.floatMeRight {
+    float: right;
+    margin-right: 4em;
+    font-weight: bold;
+}
+
+#propertiesTitleText {
+    font-weight: bold;
+    margin-right: 4em;
+    text-decoration:underline;
+}
+
+.removeLiDots {
+    list-style-type:none;
+}
+
+.textAlignCenter {
+    text-align:center;
+}
+
+#happinessDisplay {
+    margin-top: 2em;
+}
+

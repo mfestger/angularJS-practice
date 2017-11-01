@@ -1,71 +1,126 @@
-
-<!DOCTYPE html>
-<html lang="en">
-<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+﻿<!doctype html>
+<html>
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
+    <script type ="text/javascript" src="js/main.js"></script>
+    <script type ="text/javascript" src="js/controllers/MainController.js"></script>
+    <link rel="stylesheet" href="css/default.css" />
+    <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
 </head>
-<body>
 
-<div ng-app="myApp" ng-init="myFirstName='Mike'">
-<p>
-    Hello, <span ng-bind="myFirstName"></span>
-</p>
-    <!--AngularJS expressions bind AngularJS data to HTML the same way as the ng-bind directive.-->
+<body ng-app="main">
 
-    <p>My first expression: {{ 5 + 5 }}</p>
+    <div ng-controller="MainController" ng-init="currentImage=''">
+        <h1 class="centerMe"> {{title}} </h1>
+        <h3 class="centerMe"> {{header}} </h3>
+        <h4 class="centerMe"> {{subHeader}} </h4>
+       
+        <div class="alignMeLeft floatMeLeft">
+               
+                <ul>
+                    <li class="dissappearAfterStart">
+                        Please enter the name of your pet: <input ng-model="petName" />
+                    </li>
 
-    <div ng-app="">
-        <p>Name: <input type="text" ng-model="name"></p>
-        <p>{{name}}</p>
+                    <li class="dissappearAfterStart">
+                        Select species:
+                        <button ng-click="setSpeciesDog()" id="Dog" class="speciesSelector">Dog</button>
+                        <button ng-click="setSpeciesCat()" id="Cat" class="speciesSelector">Cat</button>
+                    </li>
+
+                    <li id="breedSelectorDog" class="dissappearAfterStart" hidden>
+                        Select breed:
+                        <select ng-model="selectedDog" ng-change="imageDisplayerDog(selectedDog)" id="breedDropDownDog">
+                            <option ng-repeat="x in dogBreeds">{{x.name}}</option>
+                        </select>
+                    </li>
+
+                    <li id="breedSelectorCat" class="dissappearAfterStart" hidden>
+                        Select breed:
+                        <select ng-model="selectedCat" ng-change="imageDisplayerCat(selectedCat)"  id="breedDropDownCat">
+                            <option ng-repeat="x in catBreeds">{{x.name}}</option>
+                        </select>
+                    </li>
+                </ul>
+                </div>
+      
+        <div id="propertiesContainer">
+            <div id="propertiesTitleText" class="alignMeRight">
+                {{propertiesTitle}}
+            </div>
+            <div class="alignMeRight floatMeRight">
+                <div>
+                    Name: <span class="petPropertiesColor">{{petName}}</span>
+                </div>
+
+                <div>
+                    Species: <span class="petPropertiesColor">{{species}}</span>
+                </div>
+
+                <div>
+                    Breed: <span id="displayselectedCat" class="petPropertiesColor">{{selectedCat}}</span> <span id="displayselectedDog" class="petPropertiesColor">{{selectedDog}}</span>
+                </div>
+                <br />
+                <div style="float:right;">
+                    <div>
+                        Here are some dog breeds available
+                        <ul class="removeLiDots textAlignCenter">
+                            <li ng-repeat="x in dogBreeds | orderBy: name">
+                                {{x.name}}
+
+                            </li>
+                        </ul>
+                    </div>
+                    <div>
+                        Here are some cat breeds available
+                        <ul class="removeLiDots textAlignCenter">
+                            <li ng-repeat="x in catBreeds | orderBy: name">
+                                {{x.name}}
+
+                            </li>
+                        </ul>
+                    </div>
+
+                </div>
+            </div>
+
+            <div>
+            <h4 id="petMessageDisplay" style="margin-left: 8em;" hidden>{{petMessages}}</h4>
+
+        </div>
+
+            <div id="petPicture" style="float:left;" hidden>
+                <img ng-src="{{currentImage}}" style="height: 300px; width: 300px; float: left; margin-left: 4em;" />
+            </div>   
+
+        </div>
+
+        <div id="startButton" style="float:left; margin-left: 14em; " hidden>
+            <button ng-click="startPetFunctions()">Start</button>      
+        </div>
+
+        <div class="petController" style="float:left; margin-left: 2em;" hidden>
+          <div style="font-family:cursive; color:fuchsia; font-size:150%";>{{petName}}</div> 
+            Hunger Level: 
+            <span id="hungerLevelNumber">{{hungerLevel}}</span> 
+            <br />
+            <button id="feedPetButton" ng-click="feedYourPet()">Feed {{petName}}</button>
+            <br />
+            <div id="happinessDisplay" >Happiness level: <span id="happinessLevelNumber">{{happinessLevel}}</span></div> 
+            <button id="playWithPetButton" ng-click="playWithPet()">Play with {{petName}}</button>
+            
+        </div>
+        <div class="petController" style="font-weight: 500; float:left;" hidden>
+            <p>
+                The Hunger level goes <span style="text-decoration:underline;">up</span> over time. Don't let it reach <span class="petPropertiesColor">10</span>!
+            </p>
+
+            <p>
+                The Happiness level goes <span style="text-decoration: underline;">down</span> over time. Don't let it reach <span class="petPropertiesColor">0</span>!
+            </p>
+        </div>
     </div>
 
-
-    <!--AngularJS modules define AngularJS applications.-->
-
-    <!--AngularJS controllers control AngularJS applications.-->
-
-    <!--The ng-app directive defines the application, the ng-controller directive defines the controller.-->
-
-<div ng-controller="myCtrl">
-
-    First Name: <input type="text" ng-model="firstName"><br>
-    Last Name: <input type="text" ng-model="lastName"><br>
-    <br>
-
-    Full Name: {{firstName + " " + lastName}}
-
-</div>
-
-<div ng-init="newFirstName='John'">
-
-    <p>Name: <input type="text" ng-model="newFirstName"></p>
-    <p>You wrote: {{ newFirstName }}</p>
-
-</div>
-
-   <div ng-init="names=[
-    {name:'Jani',country:'Norway'},
-    {name:'Hege',country:'Sweden'},
-    {name:'Kai',country:'Denmark'}]">
-
-       <p>Looping with objects:</p>
-       <ul>
-           <li ng-repeat="x in names">
-               {{ x.name + ', ' + x.country }}</li>
-       </ul>
-   </div>
-
-
-</div>
-
-<script>
-    var app = angular.module('myApp', []);
-    app.controller('myCtrl', function($scope) {
-        $scope.firstName= "John";
-        $scope.lastName= "Doe";
-    });
-</script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 </body>
 </html>
